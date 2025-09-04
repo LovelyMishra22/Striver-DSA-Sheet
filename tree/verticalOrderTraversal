@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode
+{
+public:
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+public:
+    TreeNode(int val1)
+    {
+        val = val1;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+map<int, map<int, multiset<int>>> mpp;
+void inorder(TreeNode* root, int row, int col)
+{
+    if(root == NULL) return;
+    mpp[col][row].insert(root->val);
+    
+    if(root->left != NULL) inorder(root->left, row+1, col-1);
+    if(root->right != NULL) inorder(root->right, row + 1, col+1);
+    return;
+}
+
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+    vector<vector<int>> ans;
+    if(root == NULL) return ans;
+    inorder(root, 0, 0);
+    for(auto it1 : mpp)
+    {
+        vector<int> vertical;
+        for(auto it2 : it1.second)
+        {
+
+            vertical.insert(vertical.end(), it2.second.begin(), it2.second.end());
+        }
+        ans.push_back(vertical);
+    }
+    return ans;
+}
