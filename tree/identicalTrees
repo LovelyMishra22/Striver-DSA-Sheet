@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode
+{
+public:
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+public:
+    TreeNode(int val1)
+    {
+        val = val1;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+/*
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+    if(p == NULL && q == NULL) return 1;
+    if(p == NULL || q == NULL) return 0;
+    bool left = isSameTree(p->left, q->left);
+    if(left == 0) return 0;
+    if(p->val != q->val) return 0;
+    bool right = isSameTree(p->right, q->right);
+    if(right == 0) return 0;
+    return 1;
+    }
+*/
+
+bool isSameTree(TreeNode* p, TreeNode* q)
+{
+    if(p == NULL || q == NULL)
+    {
+        return (p == q);
+    }
+    return (p->val == q->val)
+        && isSameTree(p->left, q->left)
+        && isSameTree(p->right, q->right);
+}
