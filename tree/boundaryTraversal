@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode
+{
+public:
+    int data;
+    TreeNode *left;
+    TreeNode *right;
+
+public:
+    TreeNode(int val1)
+    {
+        data = val1;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+vector<int> ans;
+void leftBound(TreeNode* root)
+{
+    if(root == NULL || (root->left == NULL && root->right == NULL)) return;
+    ans.push_back(root->data);
+    if(root->left != NULL) leftBound(root->left);
+    else if(root->right != NULL) leftBound(root->right);
+    return;
+}
+void leafNode(TreeNode* root)
+{
+    if(root == NULL) return;
+    if(root->left == NULL && root->right == NULL)
+    {
+        ans.push_back(root->data);
+        return;
+    }
+    if(root->left != NULL) leafNode(root->left);
+    if(root->right != NULL) leafNode(root->right);
+    return;
+}
+void rightBound(TreeNode* root)
+{
+    if(root == NULL || (root->left == NULL && root->right == NULL)) return;
+    if(root->right != NULL) rightBound(root->right);
+    else if(root->left != NULL) rightBound(root->left);
+    ans.push_back(root->data);
+    return;
+}
+vector <int> boundary(TreeNode* root){
+    //your code goes here
+        if(root == NULL) return ans;
+    ans.push_back(root->data);
+    leftBound(root->left);
+    if(root->left != NULL || root->right != NULL)
+        leafNode(root);
+    rightBound(root->right);
+    return ans;
+}
